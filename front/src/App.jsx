@@ -1,17 +1,25 @@
-// App.jsx
+// src/App.jsx
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// import Login from './components/Login';
 import AdminDashboard from './components/AdminDashboard';
-import UserDashboard from './components/UserDashboard'; // Assuming you have a UserDashboard component
+import UserDashBoard from './components/UserDashBoard';
 
-const App = () => (
-  <Router>
-    <Routes>
-      <Route path='admin/*' element={<AdminDashboard />} />
-      <Route path='user/*' element={<UserDashboard />} />
-      {/* Add other routes as needed */}
-    </Routes>
-  </Router>
-);
+const App = () => {
+  return (
+    <>
+    <UserDashBoard></UserDashBoard>
+    {/* <AdminDashboard></AdminDashboard> */}
+    </>
+    // <Router>
+    //   <Routes>
+    //     <Route path='/login' element={<Login />} />
+    //     <PrivateRoute path='/admin/*' element={<AdminDashboard />} />
+    //     {/* Redirect or public routes go here */}
+    //     <Route path='/' element={<Navigate to='/login' />} />
+    //   </Routes>
+    // </Router>
+  );
+};
 
 export default App;

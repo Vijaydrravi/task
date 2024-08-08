@@ -1,27 +1,64 @@
 import React, { useState } from 'react';
 import Sidebar from './Sidebar';
-import UserDetails from './UserDetails';
-import DialogBox from './DialogBox';
+import ProjectTable from './ProjectTable';
+import TaskArea from './TaskArea'; 
 import TaskSummary from './TaskSummary';
-import TaskArea from './TaskArea';
+import DialogBox from './DialogBox';
+import UserDetails from './UserDetails';
 
 const UserDashBoard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [tasks, setTasks] = useState([]);
-  const [view, setView] = useState('summary'); // State to manage view
+  const [projects, setProjects] = useState([
+    {
+      id: 1,
+      name: 'Project Alpha',
+      tasks: [
+        { id: 1, name: 'Task 1', status: 'To-Do' },
+        { id: 2, name: 'Task 2', status: 'Doing' },
+        { id: 3, name: 'Task 3', status: 'Done' },
+      ],
+    },
+    {
+      id: 2,
+      name: 'Project Beta',
+      tasks: [
+        { id: 4, name: 'Task 4', status: 'To-Do' },
+        { id: 5, name: 'Task 5', status: 'Done' },
+      ],
+    },
+  ]);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [view, setView] = useState('projects');
+
+  const handleProjectClick = (projectId) => {
+    const project = projects.find(p => p.id === projectId);
+    setSelectedProject(project);
+    setView('tasks');
+  };
 
   const openDialog = () => setIsDialogOpen(true);
   const closeDialog = () => setIsDialogOpen(false);
 
   const addTask = (task) => {
-    setTasks([...tasks, { ...task, id: Date.now() }]);
+    const updatedProjects = projects.map(project =>
+      project.id === selectedProject.id
+        ? { ...project, tasks: [...project.tasks, { ...task, id: Date.now() }] }
+        : project
+    );
+    setProjects(updatedProjects);
+    setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
+    closeDialog();
   };
 
   const moveTask = (id, newStatus) => {
-    const updatedTasks = tasks.map(task =>
-      task.id === id ? { ...task, status: newStatus } : task
-    );
-    setTasks(updatedTasks);
+    const updatedProjects = projects.map(project => ({
+      ...project,
+      tasks: project.tasks.map(task =>
+        task.id === id ? { ...task, status: newStatus } : task
+      ),
+    }));
+    setProjects(updatedProjects);
+    setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
   };
 
   return (
@@ -29,7 +66,7 @@ const UserDashBoard = () => {
       <div className='flex'>
         <div className='w-1/5 fixed top-0 left-0 h-screen bg-gray-100 border-r border-gray-200'>
           <UserDetails />
-          <Sidebar setView={setView} /> {/* Pass view setter to Sidebar */}
+          <Sidebar setView={setView} />
         </div>
         <div className='w-4/5 ml-[20vw] flex flex-col min-h-screen p-5'>
           <div className='flex justify-end mb-4'>
@@ -52,8 +89,18 @@ const UserDashBoard = () => {
               </button>
             )}
           </div>
-          {view === 'summary' && <TaskSummary tasks={tasks} />}
-          {view === 'tasks' && <TaskArea tasks={tasks} moveTask={moveTask} />}
+          {view === 'projects' && (
+            <ProjectTable
+              projects={projects}
+              onProjectClick={handleProjectClick}
+            />
+          )}
+          {view === 'tasks' && selectedProject && (
+            <>
+              <TaskSummary tasks={selectedProject.tasks} />
+              <TaskArea tasks={selectedProject.tasks} moveTask={moveTask} />
+            </>
+          )}
         </div>
       </div>
       <DialogBox isOpen={isDialogOpen} onClose={closeDialog} onAddTask={addTask} />
