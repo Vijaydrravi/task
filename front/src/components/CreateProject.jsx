@@ -1,59 +1,42 @@
+// CreateProject.jsx
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
-const CreateProject = ({ onAddProject }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [status, setStatus] = useState('To-Do'); // Default status
+const CreateProject = ({ onCreateProject }) => {
+  const [project, setProject] = useState({ name: '', status: 'To-Do' });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProject((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name && description) {
-      onAddProject({ name, description, status, id: Date.now() });
-      setName('');
-      setDescription('');
-      setStatus('To-Do'); // Reset status to default
-    }
+    onCreateProject({ ...project, id: uuidv4() });
+    setProject({ name: '', status: 'To-Do' }); // Reset form
   };
 
   return (
-    <div className='p-4'>
-      <h2 className='text-2xl font-semibold mb-4'>Create New Project</h2>
-      <form onSubmit={handleSubmit} className='space-y-4'>
-        <div>
-          <label className='block mb-1 font-medium'>Project Name:</label>
+    <div className='w-full p-5'>
+      <h2 className='text-2xl font-semibold mb-4'>Create Project</h2>
+      <form onSubmit={handleSubmit} className='bg-white border border-gray-300 rounded-lg shadow-md p-4'>
+        <div className='mb-4'>
+          <label htmlFor='name' className='block text-sm font-medium mb-2'>Project Name</label>
           <input
+            id='name'
+            name='name'
             type='text'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className='w-full px-3 py-2 border border-gray-300 rounded'
+            value={project.name}
+            onChange={handleChange}
             required
+            className='w-full px-3 py-2 border border-gray-300 rounded'
           />
-        </div>
-        <div>
-          <label className='block mb-1 font-medium'>Description:</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className='w-full px-3 py-2 border border-gray-300 rounded'
-            required
-          ></textarea>
-        </div>
-        <div>
-          <label className='block mb-1 font-medium'>Status:</label>
-          <select
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            className='w-full px-3 py-2 border border-gray-300 rounded'
-          >
-            <option value='To-Do'>To-Do</option>
-            <option value='Done'>Done</option>
-          </select>
         </div>
         <button
           type='submit'
-          className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
+          className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200'
         >
-          Add Project
+          Create Project
         </button>
       </form>
     </div>

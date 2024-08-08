@@ -1,16 +1,17 @@
-import { useState } from 'react'
+// App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import AdminDashboard from './components/AdminDashboard';
+import UserDashboard from './components/UserDashboard'; // Assuming you have a UserDashboard component
 
-import UserDashBoard from './components/UserDashBoard'
-import AdminDashboard from './components/AdminDashboard'
-function App() {
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path='admin/*' element={<AdminDashboard />} />
+      <Route path='user/*' element={<UserDashboard />} />
+      {/* Add other routes as needed */}
+    </Routes>
+  </Router>
+);
 
-
-  return (
-    <>
-    {/* <AdminDashboard></AdminDashboard> */}
-     <UserDashBoard></UserDashBoard>
-    </>
-  )
-}
-
-export default App
+export default App;

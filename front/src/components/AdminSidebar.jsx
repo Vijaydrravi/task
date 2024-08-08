@@ -1,28 +1,39 @@
+// Sidebar.jsx
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const AdminSidebar = ({ setView }) => {
-  return (
-    <div className='p-4'>
-      <button
-        onClick={() => setView('dashboardSummary')}
-        className='block w-full px-4 py-2 mb-2 bg-blue-500 text-white rounded hover:bg-blue-600'
-      >
-        Dashboard Summary
-      </button>
-      <button
-        onClick={() => setView('createProject')}
-        className='block w-full px-4 py-2 mb-2 bg-green-500 text-white rounded hover:bg-green-600'
-      >
-        Create Project
-      </button>
-      <button
-        onClick={() => setView('projectList')}
-        className='block w-full px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600'
-      >
-        Project List
-      </button>
-    </div>
-  );
-};
+const AdminSidebar = () => (
+  <div className='w-1/5 fixed top-0 left-0 h-screen bg-gray-100 border-r border-gray-200 p-4'>
+    <h2 className='text-lg font-semibold mb-4'>Admin Dashboard</h2>
+    <nav>
+      <ul className='space-y-2'>
+        <li>
+          <Link
+            to="/admin/dashboard-summary"
+            className='block py-2 px-4 hover:bg-gray-200 rounded'
+          >
+            Dashboard Summary
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/create-project"
+            className='block py-2 px-4 hover:bg-gray-200 rounded'
+          >
+            Create Project
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/project-list"
+            className='block py-2 px-4 hover:bg-gray-200 rounded'
+          >
+            Project List
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  </div>
+);
 
 export default AdminSidebar;
