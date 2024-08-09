@@ -1,24 +1,19 @@
-// src/App.jsx
 import React from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Login from './components/Login';
-import AdminDashboard from './components/AdminDashboard';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SignUp from './SignUp';
+import Login from './Login';
 import UserDashBoard from './components/UserDashBoard';
 
 const App = () => {
   return (
-    <>
-    <UserDashBoard></UserDashBoard>
-    {/* <AdminDashboard></AdminDashboard> */}
-    </>
-    // <Router>
-    //   <Routes>
-    //     <Route path='/login' element={<Login />} />
-    //     <PrivateRoute path='/admin/*' element={<AdminDashboard />} />
-    //     {/* Redirect or public routes go here */}
-    //     <Route path='/' element={<Navigate to='/login' />} />
-    //   </Routes>
-    // </Router>
+    <Router>
+      <Routes>
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<UserDashBoard />} />
+        <Route path="/" element={<Login />} /> {/* Default to login */}
+      </Routes>
+    </Router>
   );
 };
 

@@ -3,23 +3,14 @@ import React, { useState } from 'react';
 // import Login from './components/Login';
 // import AdminDashboard from './components/AdminDashboard';
 // import UserDashBoard from './components/UserDashBoard';
-
+import Login from './components/Login';
 const App = () => {
-  const [token, setToken] = useState('');
+
   
   return (
-
     <>
-
-      {/* <UserDashBoard></UserDashBoard> */}
-      <h1>He</h1>
+    <Login></Login>
     </>
-    // <Router>
-    //   <Routes>
-    //     <Route path="/" element={<Login setToken={setToken} />} />
-    //     <Route path="/dashboard" element={token ? <AdminDashboard token={token} /> : <Login setToken={setToken} />} />
-    //   </Routes>
-    // </Router>
   );
 };
 
