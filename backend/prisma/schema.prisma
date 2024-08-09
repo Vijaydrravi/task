@@ -14,8 +14,16 @@ datasource db {
 }
 
 
-model User{
-   id      Int      @id @default(autoincrement())
-   mail    String  
-   password String
+model User {
+ id Int @id @default(autoincrement()) 
+ mail String
+ password String
+
+}
+
+model Project {
+  id        String   @id @default(uuid())
+  name      String
+  tasks     Json     // This will store tasks as a JSON object
+  userIds   String[] // Array of user IDs (as UUIDs) assigned to the project
 }

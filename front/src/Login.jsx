@@ -9,6 +9,7 @@ const Login = () => {
 
   const handleLog = async (e) => {
     e.preventDefault();
+    
     try {
       const res = await axios.post("http://127.0.0.1:3001/api/login", { mail, password });
       console.log(res);
@@ -16,6 +17,7 @@ const Login = () => {
         navigate('/dashboard'); // Navigate to dashboard after successful login
       }
     } catch (error) {
+      
       console.error('Login failed', error);
     }
   };
@@ -33,7 +35,7 @@ const Login = () => {
             <h1 className="pt-8 pb-6 font-bold dark:text-gray-400 text-5xl text-center cursor-default">
               Log in
             </h1>
-            <form action="#" method="post" className="space-y-4">
+            <form  className="space-y-4">
               <div>
                 <label htmlFor="email" className="mb-2 dark:text-gray-400 text-lg">Email</label>
                 <input

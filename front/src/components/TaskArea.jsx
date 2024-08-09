@@ -3,6 +3,11 @@ import React from 'react';
 const TaskArea = ({ tasks, moveTask }) => {
   const statuses = ['To-Do', 'Doing', 'Done'];
 
+  if (!Array.isArray(tasks)) {
+    console.error('Expected tasks to be an array, but got:', tasks);
+    return null; // or return a fallback UI
+  }
+
   return (
     <div className='flex gap-4'>
       {statuses.map(status => (

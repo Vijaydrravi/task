@@ -61,12 +61,17 @@ const UserDashBoard = () => {
     setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove the token from local storage
+    window.location.href = '/login'; 
+  };
+
   return (
     <>
       <div className='flex'>
         <div className='w-1/5 fixed top-0 left-0 h-screen bg-gray-100 border-r border-gray-200'>
           <UserDetails />
-          <Sidebar setView={setView} />
+          <Sidebar setView={setView} onLogout={handleLogout} />
         </div>
         <div className='w-4/5 ml-[20vw] flex flex-col min-h-screen p-5'>
           <div className='flex justify-end mb-4'>
