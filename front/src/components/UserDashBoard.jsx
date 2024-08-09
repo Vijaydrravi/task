@@ -9,6 +9,8 @@ import UserDetails from './UserDetails';
 const UserDashBoard = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isTaskDialogOpen, setIsTaskDialogOpen] = useState(false);
+  
+  // Initial project state
   const [projects, setProjects] = useState([
     {
       id: 1,
@@ -32,18 +34,21 @@ const UserDashBoard = () => {
   const [view, setView] = useState('projects');
   const [newProjectName, setNewProjectName] = useState('');
 
+  // Handle project click
   const handleProjectClick = (projectId) => {
     const project = projects.find(p => p.id === projectId);
     setSelectedProject(project);
     setView('tasks');
   };
 
+  // Open/Close Project Dialog
   const openProjectDialog = () => setIsDialogOpen(true);
   const closeProjectDialog = () => {
     setIsDialogOpen(false);
     setNewProjectName(''); // Clear project name
   };
 
+  // Create a new project
   const createProject = () => {
     if (newProjectName.trim()) {
       const newProject = {
@@ -56,9 +61,11 @@ const UserDashBoard = () => {
     }
   };
 
+  // Open/Close Task Dialog
   const openTaskDialog = () => setIsTaskDialogOpen(true);
   const closeTaskDialog = () => setIsTaskDialogOpen(false);
 
+  // Add a new task
   const addTask = (task) => {
     const updatedProjects = projects.map(project =>
       project.id === selectedProject.id
@@ -70,6 +77,7 @@ const UserDashBoard = () => {
     closeTaskDialog();
   };
 
+  // Move a task to a different status
   const moveTask = (id, newStatus) => {
     const updatedProjects = projects.map(project => ({
       ...project,
@@ -81,6 +89,7 @@ const UserDashBoard = () => {
     setSelectedProject(updatedProjects.find(p => p.id === selectedProject.id));
   };
 
+  // Handle logout
   const handleLogout = () => {
     localStorage.removeItem('token'); // Remove the token from local storage
     window.location.href = '/login'; // Redirect to the login page
@@ -94,7 +103,7 @@ const UserDashBoard = () => {
           <Sidebar 
             setView={setView} 
             onLogout={handleLogout} 
-            onCreateProject={openProjectDialog} 
+            openProjectDialog={openProjectDialog} 
           />
         </div>
         <div className='w-4/5 ml-[20vw] flex flex-col min-h-screen p-5'>
